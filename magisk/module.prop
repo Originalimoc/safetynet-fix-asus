@@ -1,7 +1,6 @@
-id=safetynet-fix
-name=Universal SafetyNet Fix
-version=v2.4.0-MOD_2.0
-versionCode=24020
-author=kdrag0n, modded by Displax
-description=A universal fix for SafetyNet and Play Integrity API on Android 8–13 devices with hardware attestation.
-updateJson=https://raw.githubusercontent.com/Displax/safetynet-fix/dev/update.json
+id=asus-global-conv
+name=Patch for ASUS Global ROM
+version=v8.8.8.8
+versionCode=8888
+author=imoc
+description=Fixes for ASUS devices with Global ROM on CN hardware, plus Play Integrity fingerprint spoofing

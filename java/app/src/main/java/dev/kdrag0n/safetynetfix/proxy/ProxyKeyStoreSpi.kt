@@ -40,13 +40,14 @@ class ProxyKeyStoreSpi private constructor(
     override fun engineGetCertificateChain(alias: String?): Array<Certificate>? {
         logDebug("Proxy key store: get certificate chain")
 
-        if (isCallerSafetyNet()) {
-            logDebug("Blocking call")
-            throw UnsupportedOperationException()
-        } else {
-            logDebug("Allowing call")
-            return orig.engineGetCertificateChain(alias)
-        }
+        return orig.engineGetCertificateChain(alias)
+        // if (isCallerSafetyNet()) {
+        //     logDebug("Blocking call")
+        //     throw UnsupportedOperationException()
+        // } else {
+        //     logDebug("Allowing call")
+        //     return orig.engineGetCertificateChain(alias)
+        // }
     }
 
     // Direct delegation. We have to do this manually because the Kotlin compiler can only do it

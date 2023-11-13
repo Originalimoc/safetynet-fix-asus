@@ -84,20 +84,36 @@ private:
     }
 
     void preSpecialize(const std::string& process) {
-        // Only touch GMS
-        if (process.rfind("com.google.android.gms", 0) != 0) {
+        bool isTargetProcess = 0;
+        bool isGMS = 0;
+        bool isGMSSN = 0;
+        bool isHwInfo = 0;
+        // Only touch necessary processess
+        if (process.rfind("com.google.android.gms", 0) == 0) {
+            isTargetProcess = 1;
+            isGMS = 1;
+            if (process == "com.google.android.gms.unstable") {
+                isGMSSN = 1;
+            }
+        }
+        if (process.rfind("ru.andr7e.deviceinfohw", 0) == 0) {
+            isTargetProcess = 1;
+            isHwInfo = 1;
+        }
+
+        if (!isTargetProcess) {
             api->setOption(zygisk::DLCLOSE_MODULE_LIBRARY);
             return;
         }
 
-        // Force DenyList unmounting for all GMS processes
-        api->setOption(zygisk::FORCE_DENYLIST_UNMOUNT);
+        // Force DenyList unmounting for all target processes, preventing root check
+        // api->setOption(zygisk::FORCE_DENYLIST_UNMOUNT);
 
         // The unstable process is where SafetyNet attestation actually runs, so we only need to
         // spoof the model in that process. Leaving other processes alone fixes various issues
         // caused by model detection and flag provisioning, such as broken weather with the new
         // smartspace on Android 12.
-        if (process == "com.google.android.gms.unstable") {
+        if (isGMS || isHwInfo) {
             // Load the payload, but don't inject it yet until after specialization
             // Otherwise, specialization fails if any code from the payload still happens to be
             // running

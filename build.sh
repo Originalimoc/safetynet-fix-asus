@@ -12,7 +12,8 @@ debug_mode=1
 if [[ "$build_mode" == "release" ]]; then
     debug_mode=0
 fi
-$ANDROID_HOME/ndk/25.2.9519653/ndk-build -j48 NDK_DEBUG=$debug_mode
+$ANDROID_HOME/ndk/android-ndk-r25c/ndk-build clean
+$ANDROID_HOME/ndk/android-ndk-r25c/ndk-build -j32 NDK_DEBUG=$debug_mode
 popd
 
 pushd java
